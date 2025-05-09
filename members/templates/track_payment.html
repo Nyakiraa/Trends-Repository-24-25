@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdNU Payment System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .account-method {
+        margin-top: 12px;
+        font-size:  12px;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #f0f0f0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.noscroll {
+      overflow: hidden;
+    }
+
+    .navbar {
+      background-color: #0e4c81;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 20;
+    }
+
+    .menu-icon, .user-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #f5f5f5;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transition: transform 0.3s ease;
+      transform: translateX(-100%);
+      z-index: 15;
+      padding: 20px 0;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar img {
+      width: 150px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+
+    .sidebar button {
+      width: 80%;
+      margin: 10px auto;
+      display: block;
+      padding: 10px;
+      background-color: #0e4c81;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    .student-info {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      margin-top: 250px;
+      color: #333;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+      width: 100%;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      margin: 30px auto;
+    }
+
+    .main.sidebar-active {
+      margin-left: 250px;
+    }
+
+    /* New styles for Track Payment section */
+    .main h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 24px;
+    }
+
+    .payment-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .payment-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+    }
+
+    .payment-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .payment-table td:first-child {
+      width: 40%;
+      font-weight: bold;
+      background-color: #f5f5f5;
+    }
+
+    .payment-table td:last-child {
+      text-align: right;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background-color: #4CAF50;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+
+    .transfer-details {
+      margin-top: 30px;
+    }
+
+    .transfer-details h3 {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .timeline {
+      position: relative;
+      margin-left: 30px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      background-color: #ddd;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 30px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -5px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      background-color: #ddd;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .timeline-item.completed .timeline-dot {
+      background-color: #4CAF50;
+    }
+
+    .timeline-item.active .timeline-dot {
+      background-color: #4CAF50;
+    }
+
+    .timeline-item.completed .timeline-dot::before {
+      content: '✓';
+      position: absolute;
+      top: -4px;
+      left: 1px;
+      color: white;
+      font-size: 12px;
+    }
+
+    .timeline-content {
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .timeline-date {
+      font-size: 14px;
+      color: #777;
+    }
+
+    .timeline-item.inactive .timeline-content {
+      color: #999;
+    }
+
+    .content-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .content-card h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .content-card label {
+      font-weight: bold;
+    }
+
+    .content-card input {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .content-card button {
+      padding: 10px 15px;
+      background-color: #0e4c81;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+    }
+
+    .form-col {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .registered-accounts {
+      background-color: #eee;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 40px;
+    }
+
+    .registered-accounts h3 {
+      margin-bottom: 15px;
+    }
+
+    /* Highlight the active timeline item */
+    .timeline-item.active .timeline-content {
+      color: #0e4c81;
+      font-weight: bold;
+    }
+
+    .timeline-item.active .timeline-dot {
+      background-color: #0e4c81;
+      box-shadow: 0 0 0 3px rgba(14, 76, 129, 0.2);
+    }
+
+    /* Real-time date styling */
+    .real-time-date {
+      font-weight: bold;
+      color: #0e4c81;
+    }
+
+    @media (max-width: 768px) {
+      .main.sidebar-active {
+        margin-left: 0;
+      }
+
+      .form-row {
+        flex-direction: column;
+      }
+      
+      .main {
+        margin: 15px;
+        padding: 20px;
+      }
+      
+      .payment-table td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="menu-icon" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="system-title">AdNU Payment System</div>
+    <div class="user-icon">
+      <i class="fas fa-user-circle"></i>
+    </div>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <div class="content-wrapper">
+    <div class="sidebar" id="sidebar">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/adnu-payment-high-resolution-logo-transparent%20%281%29%201-yPBWkNBY0XATT8vTVxUJJyoAxQ5tWG.png" alt="Logo">
+      <button class="action-button" onclick="window.location.href='{% url 'payment' %}'">PAYMENT</button>
+      <button class="action-button">TRACK PAYMENT</button>
+      <div class="student-info">
+        <div><strong>STUDENT ACCOUNT</strong></div>
+        <div>DEMIZZE R. MAGISRADO</div>
+        <div>2023-00678</div>
+        <div>+63 945 39 9239</div>
+        <div>dmagistrado@gbox.adnu.edu.ph</div>
+      </div>
+    </div>
+  
+    <main class="main" id="main-container">
+      <h1>TRACK PAYMENT</h1>
+      
+      <table class="payment-table">
+          <tr>
+              <td>Track ID#:</td>
+              <td>10920132412</td>
+          </tr>
+          <tr>
+              <td>Recipient Name:</td>
+              <td>Demmize R. Magistrado</td>
+          </tr>
+          <tr>
+              <td>Amount Sent:</td>
+              <td>₱17,000</td>
+          </tr>
+          <tr>
+              <td>Sent to:</td>
+              <td>Ateneo de Naga University</td>
+          </tr>
+          <tr>
+              <td>Type of Payment:</td>
+              <td>Bank</td>
+          </tr>
+          <tr>
+              <td>Transfer Status:</td>
+              <td>The money is on its way <span class="status-dot"></span></td>
+          </tr>
+      </table>
+      
+      <div class="transfer-details">
+          <h3>Transfer Details:</h3>
+          
+          <div class="timeline">
+              <div class="timeline-item completed">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">Transfer was submitted</div>
+                  <div class="timeline-date" id="real-time-date">Loading current time...</div>
+              </div>
+              
+              <div class="timeline-item active">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">The money is on its way</div>
+              </div>
+              
+              <div class="timeline-item inactive">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">The money is received</div>
+              </div>
+              
+              <div class="timeline-item inactive">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">Enrolled.</div>
+              </div>
+          </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContainer = document.getElementById('main-container');
+
+      sidebar.classList.toggle('active');
+      sidebarOverlay.classList.toggle('active');
+
+      if (window.innerWidth > 768) {
+        mainContainer.classList.toggle('sidebar-active');
+      }
+
+      document.body.classList.toggle('noscroll', sidebar.classList.contains('active'));
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContainer = document.getElementById('main-container');
+
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      mainContainer.classList.remove('sidebar-active');
+
+      document.body.classList.remove('noscroll');
+    }
+
+    function initSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContainer = document.getElementById('main-container');
+
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      mainContainer.classList.remove('sidebar-active');
+      document.body.classList.remove('noscroll');
+    }
+
+    // Function to update the date and time in real-time
+    function updateDateTime() {
+      const dateElement = document.getElementById('real-time-date');
+      const now = new Date();
+      
+      // Format the date as "Month Day at HH:MM AM/PM"
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const month = months[now.getMonth()];
+      const day = now.getDate();
+      
+      let hours = now.getHours();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // Convert 0 to 12
+      
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      
+      const formattedDate = `${month} ${day} at ${hours}:${minutes}`;
+      dateElement.textContent = formattedDate;
+      dateElement.classList.add('real-time-date');
+    }
+
+    // Update the date and time every second
+    function startRealTimeClock() {
+      updateDateTime(); // Initial update
+      setInterval(updateDateTime, 1000); // Update every second
+    }
+
+    window.addEventListener('load', function() {
+      initSidebar();
+      startRealTimeClock();
+    });
+    window.addEventListener('resize', initSidebar);
+  </script>
+</body>
+</html>

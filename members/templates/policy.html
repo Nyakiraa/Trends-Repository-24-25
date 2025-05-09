@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy & Terms of Service - MyADNU Payment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: #0e4c81;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .system-title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .user-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .main-container {
+            flex: 1;
+            position: relative;
+            overflow: auto;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WTNaga_BAHALANA_A2%201%20%281%29-3U9phMxT2mkILBSbh5lLSHCZchyd3Z.png');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.9);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(59, 67, 96, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .policy-card {
+            background-color: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .policy-title {
+            font-size: 28px;
+            color: #666;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .policy-content {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .policy-paragraph {
+            margin-bottom: 15px;
+        }
+
+        .continue-btn {
+            background-color: #1a6ca4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            float: right;
+        }
+
+        .continue-btn:hover {
+            background-color: #155a8a;
+        }
+
+        @media (max-width: 768px) {
+            .policy-card {
+                padding: 20px;
+            }
+            
+            .policy-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="system-title">AdNU Payment System</div>
+        <div class="user-icon">
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="background"></div>
+        <div class="overlay">
+            <div class="policy-card">
+                <h1 class="policy-title">Privacy Policy & Terms of Service</h1>
+                
+                <div class="policy-content">
+                    <p class="policy-paragraph">
+                        By using our online payment services, you acknowledge and agree to our Privacy Policy and Terms of Service. We are committed to protecting your privacy and ensuring the security of your personal and financial information.
+                    </p>
+                    
+                    <p class="policy-paragraph">
+                        When you use our app, we may collect data such as your name, email address, phone number, payment details, and transaction history. This information is used to facilitate secure payments, prevent fraud, and improve our services. We implement strong security measures, including encryption and authentication protocols, to safeguard your data.
+                    </p>
+                    
+                    <p class="policy-paragraph">
+                        We do not sell, trade, or share your personal information with third parties, except as required by law or when necessary to complete a transaction through trusted financial institutions. Users are responsible for maintaining the confidentiality of their account credentials and must report any unauthorized access immediately. Any misuse of our platform, including fraudulent transactions or violations of applicable laws, may result in account suspension or legal action.
+                    </p>
+                    
+                    <p class="policy-paragraph">
+                        By continuing to use MyAdnuPayment System, you agree to comply with our policies and any future updates. We reserve the right to modify these terms at any time, and it is your responsibility to review them periodically. If you do not agree with any part of these terms, please discontinue the use of our services.
+                    </p>
+                </div>
+                
+                <button class="continue-btn" onclick="window.location.href='{% url 'dashboard' %}'">Continue</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>

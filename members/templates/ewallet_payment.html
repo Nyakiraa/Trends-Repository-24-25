@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdNU Payment System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .account-method {
+        margin-top: 12px;
+        font-size:  12px;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #f0f0f0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.noscroll {
+      overflow: hidden;
+    }
+
+    .navbar {
+      background-color: #0e4c81;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 20;
+    }
+
+    .menu-icon, .user-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #f5f5f5;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transition: transform 0.3s ease;
+      transform: translateX(-100%);
+      z-index: 15;
+      padding: 20px 0;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar img {
+      width: 150px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+
+    .sidebar button {
+      width: 80%;
+      margin: 10px auto;
+      display: block;
+      padding: 10px;
+      background-color: #0e4c81;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    .student-info {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      margin-top: 250px;
+      color: #333;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+      width: 100%;
+    }
+
+    .main.sidebar-active {
+      margin-left: 250px;
+    }
+
+    .content-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .content-card h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .content-card label {
+      font-weight: bold;
+    }
+
+    .content-card input {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .content-card button {
+      padding: 10px 15px;
+      background-color: #0e4c81;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+    }
+
+    .form-col {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .registered-accounts {
+      background-color: #eee;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 40px;
+    }
+
+    .registered-accounts h3 {
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .main.sidebar-active {
+        margin-left: 0;
+      }
+
+      .form-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="menu-icon" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="system-title">AdNU Payment System</div>
+    <div class="user-icon">
+      <i class="fas fa-user-circle"></i>
+    </div>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <div class="content-wrapper">
+    <div class="sidebar" id="sidebar">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/adnu-payment-high-resolution-logo-transparent%20%281%29%201-yPBWkNBY0XATT8vTVxUJJyoAxQ5tWG.png" alt="Logo">
+      <button class="action-button" onclick="window.location.href='{% url 'payment' %}'">PAYMENT</button>
+      <button class="action-button" onclick="window.location.href='{% url 'track_payment' %}'">TRACK PAYMENT</button>
+      <div class="student-info">
+        <div><strong>STUDENT ACCOUNT</strong></div>
+        <div>DEMIZZE R. MAGISRADO</div>
+        <div>2023-00678</div>
+        <div>+63 945 39 9239</div>
+        <div>dmagistrado@gbox.adnu.edu.ph</div>
+      </div>
+    </div>
+
+    <div class="main" id="main-container">
+      <div class="content-card">
+        <h2>EWALLET PAYMENT OPTIONS</h2>
+
+        <div style="text-align: center; margin-bottom: 25px;">
+            <p style="background-color: #0e4c81; color: white; padding: 8px 16px; border-radius: 4px; width: fit-content; margin: 0 auto 10px auto; font-size: 14px;">AdNU ACCOUNTS</p>
+            <p class="account-method">BPI - 3245 2948 2034</p>
+            <p class="account-method">BDO - 0348 0238 4094</p>
+            <p class="account-method">PNB - 2308 0923 9038</p>
+            <p class="account-method">GOTYME - 1282 9740 2973</p>
+            
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            NAME OF E-WALLET
+            <input type="text" />
+
+            ACCOUNT HOLDER
+            <input type="text" />
+
+            CONTACT NUMBER
+            <input type="text" />
+          </div>
+
+          <div class="form-col">
+            AMOUNT
+            <input type="text" />
+
+            UNIVERSITY ACCOUNT
+            <input type="text" />
+
+            ATTACH PROOF/RECEIPT<br />
+            <button>Insert PNG/JPG</button>
+          </div>
+        </div>
+
+        <div class="registered-accounts">
+            <h3>REGISTERED E-WALLET ACCOUNT</h3>
+          
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+              <img src="https://images.seeklogo.com/logo-png/42/1/banco-de-oro-bdo-logo-png_seeklogo-429014.png" alt="BDO" width="40" />
+              <div>
+                DEMIZZE R. MAGISRADO<br />
+                +63 *** *** 9239<br />
+                BDO
+              </div>
+            </div>
+          
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="https://od2-image-api.abs-cbn.com/prod/20241110051156/229dd366749af5ca3c1ff4139b1ef006795687a79595a9a29407d8dd1f31bc05.jpg" alt="BPI" width="40" />
+              <div>
+                +63 *** *** 9812<br />
+                BPI
+              </div>
+            </div>
+          </div>
+      </div>  
+</div>  
+  </div>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContainer = document.getElementById('main-container');
+
+      sidebar.classList.toggle('active');
+      sidebarOverlay.classList.toggle('active');
+
+      if (window.innerWidth > 768) {
+        mainContainer.classList.toggle('sidebar-active');
+      }
+
+      document.body.classList.toggle('noscroll', sidebar.classList.contains('active'));
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContainer = document.getElementById('main-container');
+
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      mainContainer.classList.remove('sidebar-active');
+
+      document.body.classList.remove('noscroll');
+    }
+
+    function initSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContainer = document.getElementById('main-container');
+
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      mainContainer.classList.remove('sidebar-active');
+      document.body.classList.remove('noscroll');
+    }
+
+    window.addEventListener('load', initSidebar);
+    window.addEventListener('resize', initSidebar);
+  </script>
+</body>
+</html>

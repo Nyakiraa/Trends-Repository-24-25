@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdNU Payment System - About Us</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #f0f0f0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.noscroll {
+      overflow: hidden;
+    }
+
+    .navbar {
+      background-color: #0e4c81;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 20;
+    }
+
+    .menu-icon, .user-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      position: relative;
+      flex-direction: column;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.sidebar-active {
+      margin-left: 250px;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #f5f5f5;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transition: transform 0.3s ease;
+      transform: translateX(-100%);
+      z-index: 15;
+      padding: 20px 0;
+    }
+    .team-container {
+  text-align: center;
+  margin: 40px auto;
+  max-width: 100%;
+  padding: 0 20px;
+}
+
+.team-title {
+  font-size: 24px;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.team-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.team-member {
+  flex: 0 0 auto;
+  width: 200px;
+  background: linear-gradient(to bottom, #0e1a34, #2b4d79);
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+}
+
+.team-member img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.team-member h3 {
+  font-size: 16px;
+  margin: 10px 0 5px;
+  margin-bottom: 20px;
+}
+
+.team-member p {
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar img {
+      width: 150px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+
+    .sidebar button {
+      width: 80%;
+      margin: 10px auto;
+      display: block;
+      padding: 10px;
+      background-color: #0e4c81;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    .student-info {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      margin-top: 290px;
+      color: #333;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      width: 100%;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      margin: 30px auto;
+    }
+
+    /* About Us specific styles */
+    .about-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 40px;
+    }
+
+    .about-content {
+      flex: 1;
+    }
+
+    .about-image {
+      width: 200px;
+      height: 200px;
+      flex-shrink: 0;
+    }
+
+    .main h1 {
+      color: #000;
+      margin-bottom: 20px;
+      font-size: 36px;
+    }
+
+    .main p {
+      color: #333;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #0e4c81;
+      color: white;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .footer-logo {
+      width: 120px;
+      height: 120px;
+      margin-right: 40px;
+    }
+
+    .footer-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-info h3 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: normal;
+    }
+
+    .footer-contact {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer-contact-left, .footer-contact-right {
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      .main-content.sidebar-active {
+        margin-left: 0;
+      }
+      
+      .main {
+        margin: 15px;
+      }
+      
+      .about-section {
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+      
+      .about-image {
+        margin-bottom: 20px;
+      }
+      
+      .footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .footer-logo {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+      
+      .footer-contact {
+        flex-direction: column;
+      }
+      
+      .footer-contact-left, .footer-contact-right {
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="menu-icon" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="system-title">AdNU Payment System</div>
+    <div class="user-icon">
+      <i class="fas fa-user-circle"></i>
+    </div>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <div class="content-wrapper">
+    <div class="sidebar" id="sidebar">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/adnu-payment-high-resolution-logo-transparent%20%281%29%201-yPBWkNBY0XATT8vTVxUJJyoAxQ5tWG.png" alt="Logo">
+      <button class="action-button">ABOUT US</button>
+      <div class="student-info">
+        <div><strong>STUDENT ACCOUNT</strong></div>
+        <div>DEMIZZE R. MAGISRADO</div>
+        <div>2023-00678</div>
+        <div>+63 945 39 9239</div>
+        <div>dmagistrado@gbox.adnu.edu.ph</div>
+      </div>
+    </div>
+  
+    <div class="main-content" id="main-content">
+      <main class="main" id="main-container">
+        <h1>About Us</h1>
+        
+        <div class="about-section">
+          <div class="about-content">
+            <p>The Ateneo Payment System is an innovative digital platform designed to streamline financial transactions at Ateneo de Naga University. Developed by students from the Department of Computer Studies, this system aims to enhance the efficiency, security, and accessibility of payment processes for students, guardians, and the Treasurer's Office.</p>
+            
+            <p>For years, the university has faced challenges such as long queues, delayed payment reflections, and verification issues, especially during peak enrollment and examination periods. The Ateneo Payment System addresses these concerns by offering multiple payment options, including online, offsite, and over-the-counter transactions. With features like real-time payment verification, automated receipt generation, and a digital queuing system, the platform ensures a seamless and hassle-free experience.</p>
+          </div>
+          
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/adnu-payment-high-resolution-logo-transparent%20%281%29%201-yPBWkNBY0XATT8vTVxUJJyoAxQ5tWG.png" alt="AdNU Payment System Logo" class="about-image">
+        </div>
+      </main>
+
+      <div class="team-container">
+        <h2 class="team-title">MEET THE TEAM</h2>
+        <div class="team-row">
+          <div class="team-member">
+            <img src="https://scontent.fwnp1-1.fna.fbcdn.net/v/t1.15752-9/494572357_1337261250911842_6056467248839307570_n.jpg?stp=dst-jpg_s480x480_tt6&_nc_cat=107&ccb=1-7&_nc_sid=0024fc&_nc_ohc=ztf50g3eKkkQ7kNvwHsIt9z&_nc_oc=AdnJs5xNNC8etVENqVVp96dK9XtXuiyADQ_nLIqaokrfhNhDn47X7cN1a9CX8wlifyY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fwnp1-1.fna&oh=03_Q7cD2QGV6jcYyVWtkOmSaHAGBP_64nlalqqyAGCdc_moqV1YYw&oe=68445E64" alt="Team Member 1">
+            <h3>{{ team_members.0.name }}</h3>
+            <p>{{ team_members.0.description }}</p>
+          </div>
+      
+          <div class="team-member">
+            <img src="https://scontent.fwnp1-1.fna.fbcdn.net/v/t1.15752-9/494573719_1371376177409896_4483537950779129696_n.png?_nc_cat=100&ccb=1-7&_nc_sid=0024fc&_nc_ohc=54iyhab0QkcQ7kNvwFWWaBP&_nc_oc=Adl7RpIXkMt7lhLcmHfHCimgIhxkur9k62iY-NJfrLWiFEq1BAkR87PV76qmWY0cF1o&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fwnp1-1.fna&oh=03_Q7cD2QE6vC7ITKjfILV4OGBdYJQWlAEkDjHqkObbuh6PMY351A&oe=684454EB" alt="Team Member 2">
+            <h3>{{ team_members.1.name }}</h3>
+            <p>{{ team_members.1.description }}</p>
+          </div>
+      
+          <div class="team-member">
+            <img src="https://scontent.fwnp1-1.fna.fbcdn.net/v/t1.15752-9/494569615_1712428646031915_8897410787294948673_n.png?stp=dst-png_s480x480&_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_ohc=Yq1mkxXd2iIQ7kNvwFCj3Vu&_nc_oc=Admt45s9HMGwUfJPfBt6tz0dx3CrskJ_5yNCU9chAkoxKGH5sBpiC_wkZStLa5FxJeo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fwnp1-1.fna&oh=03_Q7cD2QGCwcGx8vWh9T3pPijK-8raJfKCMXHFkJCoaoerIwZ5KA&oe=684450C8" alt="Team Member 3">
+            <h3>{{ team_members.2.name }}</h3>
+            <p>{{ team_members.2.description }}</p>
+          </div>
+      
+          <div class="team-member">
+            <img src="https://scontent.fwnp1-1.fna.fbcdn.net/v/t1.15752-9/494575099_3664719167152618_4832200770145099840_n.png?stp=dst-png_s480x480&_nc_cat=111&ccb=1-7&_nc_sid=0024fc&_nc_ohc=ckuCt33vBbUQ7kNvwHC1FHy&_nc_oc=Adk6uwufMb_Ms3_uRlDm7Jtd0ci6SdWF6Ju207_FJS8wWh_eAxzPbq3hTy1H0Y8zFUM&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fwnp1-1.fna&oh=03_Q7cD2QF9bywm9Z0pDWh6s-gdvrgDj4zRoBvJ3Kmlf29zg3TIHg&oe=68444C9F" alt="Team Member 4">
+            <h3>{{ team_members.3.name }}</h3>
+            <p>{{ team_members.3.description }}</p>
+          </div>
+        </div>
+      </div>
+      
+
+
+
+      <footer class="footer">
+        <img src="https://upload.wikimedia.org/wikipedia/en/e/e2/Ateneo_de_Naga_University_logo.png" alt="Ateneo De Naga University Logo" class="footer-logo">
+        
+        <div class="footer-info">
+          <h3>Ateneo De Naga University</h3>
+          
+          <div class="footer-contact">
+            <div class="footer-contact-left">
+              <div>caao@gbox.adnu.edu.ph</div>
+              <div>Ateneo de Naga University</div>
+              <div>Ateneo Avenue, Bagumbayan Sur,</div>
+            </div>
+            
+            <div class="footer-contact-right">
+              <div>Naga City 4400 Philippines</div>
+              <div>Telephone Numbers: (054) 881-4119 or 473-8447 Loc. 2312</div>
+              <div>Mobile Number: 09216755155</div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContent = document.getElementById('main-content');
+
+      sidebar.classList.toggle('active');
+      sidebarOverlay.classList.toggle('active');
+
+      if (window.innerWidth > 768) {
+        mainContent.classList.toggle('sidebar-active');
+      }
+
+      document.body.classList.toggle('noscroll', sidebar.classList.contains('active'));
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContent = document.getElementById('main-content');
+
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      mainContent.classList.remove('sidebar-active');
+
+      document.body.classList.remove('noscroll');
+    }
+
+    function initSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const mainContent = document.getElementById('main-content');
+
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      mainContent.classList.remove('sidebar-active');
+      document.body.classList.remove('noscroll');
+    }
+
+    window.addEventListener('load', initSidebar);
+    window.addEventListener('resize', initSidebar);
+  </script>
+</body>
+</html>

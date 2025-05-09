@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyADNU Payment - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WTNaga_BAHALANA_A2%201%20%281%29-3U9phMxT2mkILBSbh5lLSHCZchyd3Z.png');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.9);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(59, 67, 96, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 15px;
+        }
+
+        .welcome-text {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: #1a6ca4;
+        }
+
+        .sign-in-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a6ca4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sign-in-btn:hover {
+            background-color: #155a8a;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 15px 0;
+        }
+
+        .gbox-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #d4af37;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .gbox-btn:hover {
+            background-color: #c4a030;
+        }
+
+        @media (max-height: 600px) {
+            .logo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 10px;
+            }
+            
+            .welcome-text {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .login-form {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="background"></div>
+        <div class="overlay">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/adnu-payment-high-resolution-logo-transparent%20%281%29%201-yPBWkNBY0XATT8vTVxUJJyoAxQ5tWG.png" alt="MyADNU Payment Logo" class="logo">
+            <h1 class="welcome-text">Welcome to MyADNU Payment</h1>
+            
+            <form class="login-form" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <input type="text" name="student_id" placeholder="Student ID" class="input-field">
+                <input type="password" name="password" placeholder="Password" class="input-field">
+                
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember_me" class="checkbox" checked>
+                    <label for="remember">Remember Me</label>
+                </div>
+                
+                <button type="button" class="sign-in-btn" onclick="window.location.href='{% url 'policy' %}'">Sign In</button>
+                
+                <div class="divider"></div>
+                
+                <button type="button" class="gbox-btn" onclick="window.location.href='{% url 'google_login' %}'">Sign In with ADNU GBOX</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
